@@ -1,0 +1,264 @@
+// Task 1:
+
+using System.Diagnostics.Metrics;
+
+class person
+{
+    private string name;
+    private string address;
+
+    public person(string name, string address)
+    {
+        this.name = name;
+        this.address = address;
+    }
+    public string getName
+    {
+        get { return name; }
+    }
+
+    public string getAddress
+    {
+        get { return address; }
+        set { address = value; }
+    }
+
+    public virtual string toString()
+    {
+        return "person [ Name: " + name+ " , "+"Address: " + address+"]";
+    }
+
+}
+
+class Student : person
+{
+   private string program;
+    private int year;
+    private double fee;
+
+    public Student(string name, string address, string program,int year , double fee):base(name,address)
+    {
+        this.program = program;
+        this.year = year;
+        this.fee = fee;
+    
+    }
+
+    public string getProgram
+    {
+        get { return program; }
+        set { program = value; }
+    }
+    public int getYear
+    {
+        get { return year; }
+        set { year = value; }
+    }
+    public double getFee
+    {
+        get { return fee; }
+        set { fee = value; }
+    }
+
+    
+    public override string toString()
+    {
+        return "Student [ Name: " + getName + " , " + "Address: " + getAddress + " , " + "Program: " + program + " , " + "Year: " + year + " , " + "Fee: " + fee + "]";
+    }
+}
+
+class Staff:person
+{
+    private string school;
+    private double pay;
+
+public Staff(string name, string address,string school,double pay) : base(name, address)
+    {
+        this.school = school;
+        this.pay = pay;
+    }
+
+    public string getSchool
+    {
+        get { return school; }
+        set { school = value; }
+    }
+
+    public double getPay
+    {
+        get { return pay; }
+        set { pay = value; }
+    }
+
+    public override string toString()
+    {
+        return "Staff [ Name: " + getName + " , " + "Address: " + getAddress + " , " + "School: " + school + " , " + "Pay: " + pay + "]";
+    }
+
+}
+
+// Task 2 
+
+class Animal
+{
+    private string name;
+    
+    public Animal(string name)
+    {
+        this.name = name;
+    }
+
+    public virtual string toString()
+    {
+        return "Animal [ Name: " + name + "]";
+    }   
+
+}
+
+class Mammal : Animal
+{
+    public Mammal(string name) : base(name){}
+
+    public override string toString()
+    {
+        return "Mammal [ " + base.toString() + "]";
+    }
+}
+
+
+class Cat : Mammal
+{
+    public Cat(string name) : base(name) {  }
+
+    public void greets()
+    {
+        Console.WriteLine("Meow");
+    
+    }
+
+    public override string toString()
+    {
+        return "Cat [ " + base.toString() + "]";
+    }
+}
+
+
+class Dog : Mammal
+{
+    public Dog(string name) : base(name) { }
+
+    public void greets()
+    {
+        Console.WriteLine("Woof");
+    }
+
+    
+    public void greets(Dog dog)
+    {
+        Console.WriteLine("Woooof");
+    }
+
+    public override string toString()
+    {
+        return "Dog [ " + base.toString() + "]";
+    }
+}
+
+// Task 3
+class Employee
+{
+    static int counter_emp = 0;
+    public Employee()
+    {
+        counter_emp++;
+    }
+
+    public static int getCounter_emp()
+    {
+        return counter_emp;
+    }
+}
+
+//Task 4
+
+class test99
+{
+    public int Add(int a,int b)
+    {
+        return a + b;
+    }
+
+    public double Add(double a,double b)
+    {
+        return a + b;
+    }
+
+    public int Add(int a, int b,int c)
+    {
+        return a + b + c;
+    }
+
+}
+
+class Program
+{
+    static void Main(string[] args)
+    { 
+        Console.WriteLine("--------------------------------------------------");    
+        Console.WriteLine("---------------------Task 1-----------------------");
+        Console.WriteLine("--------------------------------------------------");
+        person person = new person("Bashar", "test1");
+        Console.WriteLine(person.toString());
+        Console.WriteLine("--------------------------------------------------");
+        Student student = new Student("Taha", "test2", "Computer Science", 2, 5000.0);
+        Console.WriteLine(student.toString());
+        Console.WriteLine("--------------------------------------------------");
+        Staff staff = new Staff("Ahmed", "test3", "Computer Science", 10000.0);
+        Console.WriteLine(staff.toString());
+
+        Console.WriteLine("--------------------------------------------------");
+        Console.WriteLine("---------------------Task 2-----------------------");
+        Console.WriteLine("--------------------------------------------------");
+        
+        Animal animal = new Animal("Bandok");
+        Console.WriteLine(animal.toString());
+        Mammal mammal = new Mammal("Mammal");
+        Console.WriteLine(mammal.toString());
+        Cat cat=new Cat("Caty");
+        Console.WriteLine(cat.toString());
+        cat.greets();
+        Dog dog = new Dog("Doggy");
+        Dog dog2 = new Dog("Doggy2");
+        Console.WriteLine(dog.toString());
+        dog.greets();
+        dog.greets(dog2);
+
+        Console.WriteLine("--------------------------------------------------");
+        Console.WriteLine("---------------------Task 3-----------------------");
+        Console.WriteLine("--------------------------------------------------");
+
+        Employee emp1 = new Employee();
+        Employee emp2 = new Employee();
+        Employee emp3 = new Employee();
+        Console.WriteLine("Number of employees: " + Employee.getCounter_emp());
+
+        Console.WriteLine("--------------------------------------------------");
+        Console.WriteLine("---------------------Task 4-----------------------");
+        Console.WriteLine("--------------------------------------------------");
+
+        test99 test = new test99();
+
+        Console.WriteLine("Add(int, int): " + test.Add(2, 3));
+        Console.WriteLine("Add(int, int, int): " + test.Add(1, 2, 3));
+        Console.WriteLine("Add(double, double): " + test.Add(2.5, 3.5));
+
+        Console.WriteLine("--------------------------------------------------");
+        Console.WriteLine("---------------------Task 5-----------------------");
+        Console.WriteLine("--------------------------------------------------");
+
+        Console.WriteLine("A.Show\nB.Display");
+
+
+
+    }
+}

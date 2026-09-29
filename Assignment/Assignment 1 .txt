@@ -1,0 +1,253 @@
+class BankAccount
+{
+    private string _accountNumber;
+    private decimal _balance;
+    public BankAccount(string _accountNumber, decimal _balance)
+    {
+        this._accountNumber = _accountNumber;
+        this._balance = _balance;
+    }
+
+    public string AccountNumber
+    {
+        get { return _accountNumber; }
+    }
+    public decimal Balance
+    {
+        get { return _balance; }
+    }
+    public void Deposit(decimal amount)
+    {
+        if (amount > 0)
+        {
+            _balance += amount;
+        }
+        else 
+        { 
+            Console.WriteLine("Deposit amount must be positive.");
+        }
+    }
+
+    public void Withdraw(decimal amount)
+    {
+        if (amount > 0 && amount <= _balance)
+        {
+            _balance -= amount;
+        }
+        else
+        {
+            Console.WriteLine("Insufficient funds or invalid withdrawal amount.");
+        }
+    }
+
+}
+
+
+class Book
+{
+    private string title;
+    private string isbn;
+    private bool isCheckedOut=false;
+    private string borrowerName="";
+
+    public Book(string title, string isbn)
+    {
+        this.title = title;
+        this.isbn = isbn;
+    }
+
+    public string Title
+    {
+        get { return title; }
+    }
+
+    public string ISBN
+    {
+        get { return isbn; }
+    }
+    public bool IsCheckedOut
+    {
+        get { return isCheckedOut; }
+    }
+
+    public string BorrowerName()
+    {
+        if(isCheckedOut)
+        {
+            return borrowerName;
+        }
+        else
+        {
+            return "Book is not checked out.";
+        }
+    }
+
+    public void CheckOut(string borrowerName)
+    {
+        if (!isCheckedOut)
+        {
+            isCheckedOut = true;
+            this.borrowerName = borrowerName;
+        }
+        else
+        {
+            Console.WriteLine("Book is already checked out.");
+        }
+    }
+
+    public void ReturnBook()
+    {
+        if (isCheckedOut)
+        {
+            isCheckedOut = false;
+            borrowerName = "";
+        }
+        else
+        {
+            Console.WriteLine("Book is not checked out.");
+        }
+    }
+
+    public void GetStatus()
+    {
+        if(isCheckedOut)
+        {
+            Console.WriteLine($"Book '{title}' is checked out by {borrowerName}.");
+        }
+        else
+        {
+            Console.WriteLine($"Book '{title}' is available.");
+        }
+    }
+
+}
+
+
+class Account
+{
+    private string id;
+    private string name;
+    private int balance = 0;
+
+    public Account(string id, string name)
+    {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Account(string id, string name, int balance)
+    {
+        this.id = id;
+        this.name = name;
+        this.balance = balance;
+    }
+
+    public string getId()
+    {
+        return id;
+    }
+
+    public string getName()
+    {
+        return name;
+    }
+
+    public int getBalance()
+    {
+        return balance;
+    }
+
+    public int credit(int amount)
+    {
+        balance += amount;
+        return balance;
+    }
+
+    public int debit(int amount)
+    {
+        if (amount <= balance)
+        {
+            balance -= amount;
+
+        }
+        else
+        {
+            Console.WriteLine("Amount exceeded balance");
+        }
+        return balance;
+    }
+
+    public int transferTo(Account another, int amount)
+    {
+        if (amount <= balance)
+        {
+            balance -= amount;
+            another.credit(amount);
+        }
+        else
+        {
+            Console.WriteLine("Amount exceeded balance");
+        }
+        return balance;
+    }
+
+
+
+
+    public string toString()
+    {
+        return $"Account[id={id}, name={name}, balance={balance}]";
+    }
+}
+
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("BankAccount Class testing :  ");
+
+        BankAccount account = new BankAccount("2026", 100);
+        Console.WriteLine($"Account Number: {account.AccountNumber}");
+        Console.WriteLine($"Balance: {account.Balance}");
+
+        account.Deposit(-1000);
+        Console.WriteLine($"Balance after deposit: {account.Balance}");
+
+        account.Withdraw(100000);
+        Console.WriteLine($"Balance after withdrawal: {account.Balance}");
+
+        Console.WriteLine("--------------------------------------------------");
+        Console.WriteLine("Book Class testing :  ");
+
+        Book book = new Book("C#", "111");
+        Console.WriteLine($"Book Title: {book.Title}");
+        Console.WriteLine($"Book ISBN: {book.ISBN}");
+        book.GetStatus();
+        book.CheckOut("Bashar");   
+        book.GetStatus();
+
+        Console.WriteLine($"Borrower Name: {book.BorrowerName()}");
+
+
+
+        Console.WriteLine("--------------------------------------------------");
+        Console.WriteLine("Account Class testing :  ");
+
+        Account account1 = new Account("111", "Bashar", 999);
+        Account account2 = new Account("222", "Taha");
+
+        Console.WriteLine($"Account 1: {account1.toString()}");
+        account1.debit(100);
+        Console.WriteLine($"Account 1 Balance after debit: {account1.getBalance()}");
+        account1.credit(101);
+        Console.WriteLine($"Account 1 Balance after credit: {account1.getBalance()}");
+        Console.WriteLine("-------------------transferTo--------------------");
+        Console.WriteLine($"Account 1: {account1.toString()}");
+        Console.WriteLine($"Account 2: {account2.toString()}");
+        account1.transferTo(account2, 500);
+        Console.WriteLine($"Account 1 Balance after transfer: {account1.getBalance()}");
+        Console.WriteLine($"Account 2 Balance after transfer: {account2.getBalance()}");
+
+    }
+}
